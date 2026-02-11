@@ -1,0 +1,35 @@
+parameters:
+
+    paths:
+        - src
+
+    # The level 10 is the highest level
+    level: 5
+
+    ignoreErrors:
+        - '#\(\) on an unknown class App\.#'
+        - '#\(\) on an unknown class Cache\.#'
+        - '#\(\) on an unknown class Auth\.#'
+        - '#\(\) on an unknown class Request\.#'
+        - '#\(\) on an unknown class Date\.#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:getDeletedAtColumn\(\)#'
+        - '#Access to an undefined property AnourValar\\EloquentJournal\\Journal#'
+        - '#Call to an undefined method Illuminate\\Support\\HigherOrderTapProxy#'
+        - '#Call to an undefined method Illuminate\\Database#'
+        - '#Call to an undefined static method#'
+        - '#AnourValar\\HttpClient\\Response#'
+
+    excludePaths:
+
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    reportMaybesInMethodSignatures: true
+    reportStaticMethodSignatures: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    reportAlwaysTrueInLastCondition: true
+    reportWrongPhpDocTypeInVarTag: true
+    checkMissingCallableSignature: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportAnyTypeWideningInVarTag: true
