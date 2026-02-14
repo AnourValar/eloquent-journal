@@ -25,7 +25,7 @@ class AnourValarEloquentJournalServiceProvider extends ServiceProvider
     public function boot()
     {
         // config
-        $this->publishes([__DIR__.'/../resources/config/eloquent_journal.php' => config_path('eloquent_journal.php')], 'eloquent_config');
+        $this->publishes([__DIR__.'/../resources/config/eloquent_journal.php' => config_path('eloquent_journal.php')], 'eloquent_journal');
 
         // migrations
         //$this->loadMigrationsFrom(__DIR__.'/../resources/database/migrations');
