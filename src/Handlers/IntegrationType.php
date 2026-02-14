@@ -34,6 +34,6 @@ class IntegrationType implements TypeInterface
             return null;
         }
 
-        return view('journal::handler.integration', ['data' => $journal->data])->render();
+        return view('eloquent_journal::handler.integration', ['data' => $journal->data])->render();
     }
 }

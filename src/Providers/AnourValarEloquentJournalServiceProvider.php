@@ -14,7 +14,7 @@ class AnourValarEloquentJournalServiceProvider extends ServiceProvider
     public function register()
     {
         // config
-        $this->mergeConfigFrom(__DIR__.'/../resources/config/journal.php', 'journal');
+        $this->mergeConfigFrom(__DIR__.'/../resources/config/eloquent_journal.php', 'eloquent_journal');
     }
 
     /**
@@ -25,7 +25,7 @@ class AnourValarEloquentJournalServiceProvider extends ServiceProvider
     public function boot()
     {
         // config
-        $this->publishes([__DIR__.'/../resources/config/journal.php' => config_path('journal.php')], 'config');
+        $this->publishes([__DIR__.'/../resources/config/eloquent_journal.php' => config_path('eloquent_journal.php')], 'eloquent_config');
 
         // migrations
         //$this->loadMigrationsFrom(__DIR__.'/../resources/database/migrations');
@@ -35,15 +35,15 @@ class AnourValarEloquentJournalServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../resources/stubs/' => app_path()], 'models');
 
         // langs
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'journal');
-        $this->publishes([__DIR__.'/../resources/lang/' => lang_path('vendor/journal')]);
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'eloquent_journal');
+        $this->publishes([__DIR__.'/../resources/lang/' => lang_path('vendor/eloquent_journal')]);
 
         // views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'journal');
-        $this->publishes([__DIR__.'/../resources/views/' => resource_path('views/vendor/journal')]);
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'eloquent_journal');
+        $this->publishes([__DIR__.'/../resources/views/' => resource_path('views/vendor/eloquent_journal')]);
 
         // observers
-        foreach (config('journal.entity') as $entity => $details) {
+        foreach (config('eloquent_journal.entity') as $entity => $details) {
             if ($details['observe']) {
                 $entity::observe(\AnourValar\EloquentJournal\Observer::class);
             }

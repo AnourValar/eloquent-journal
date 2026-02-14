@@ -150,12 +150,12 @@ class Service
 
         $morphMap = \Illuminate\Database\Eloquent\Relations\Relation::morphMap();
         $entities = [];
-        foreach (config('journal.entity') as $key => $details) {
+        foreach (config('eloquent_journal.entity') as $key => $details) {
             $entities[array_search($key, $morphMap)] = ['title' => trans($details['title'])];
         }
 
         $events = [];
-        foreach (config('journal.event') as $key => $details) {
+        foreach (config('eloquent_journal.event') as $key => $details) {
             if ($onlyPublic && empty($details['is_public'])) {
                 continue;
             }
@@ -215,7 +215,7 @@ class Service
     protected function create(array $data): Journal
     {
         try {
-            $class = config('journal.model');
+            $class = config('eloquent_journal.model');
             $journal = tap($class::fields(array_keys($data))->fill($data)->validate(basic: mt_rand(0, 500)))->save();
             event(new \AnourValar\EloquentJournal\Events\JournalCreated($journal));
             return $journal;

@@ -20,7 +20,7 @@ abstract class AbstractSuite extends \Orchestra\Testbench\TestCase
         $this->loadMigrationsFrom(__DIR__.'/../src/resources/database/migrations');
         $this->setUpDatabase($this->app);
 
-        config(['journal.model' => \AnourValar\EloquentJournal\Journal::class]);
+        config(['eloquent_journal.model' => \AnourValar\EloquentJournal\Journal::class]);
 
         //\Illuminate\Database\Eloquent\Factories\Factory::guessModelNamesUsing(fn () => \AnourValar\EloquentJournal\Journal::class);
     }

@@ -34,7 +34,7 @@ class MetricType implements TypeInterface
             return null;
         }
 
-        return view('journal::handler.metric', ['data' => $this->transRecursive($journal->data)])->render();
+        return view('eloquent_journal::handler.metric', ['data' => $this->transRecursive($journal->data)])->render();
     }
 
     /**

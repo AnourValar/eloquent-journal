@@ -62,7 +62,7 @@ class JournalController extends \Illuminate\Routing\Controller
      */
     public function index(Request $request): \Illuminate\Pagination\CursorPaginator
     {
-        $class = config('journal.model');
+        $class = config('eloquent_journal.model');
 
         return $this->buildBy(
             $class::acl()->heavy()

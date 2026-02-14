@@ -63,7 +63,7 @@ class JournalController extends \Illuminate\Routing\Controller
      */
     public function index(Request $request, \AnourValar\EloquentJournal\Service $journalService)
     {
-        $class = config('journal.model');
+        $class = config('eloquent_journal.model');
 
         $journals = $this->buildBy(
             $class::acl()->heavy()
@@ -72,6 +72,6 @@ class JournalController extends \Illuminate\Routing\Controller
         $request = $this->getBuildRequest();
         $request['configs'] = $journalService->publishConfig();
 
-        return view('journal::web.index', compact('journals', 'request'));
+        return view('eloquent_journal::web.index', compact('journals', 'request'));
     }
 }

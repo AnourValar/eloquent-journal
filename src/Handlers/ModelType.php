@@ -59,10 +59,10 @@ class ModelType implements TypeInterface
             }
 
             if (count($changed) >= 1 && count($changed) <= 3) {
-                return trans('journal::journal.type_handler.model.short_description_named', ['names' => '«' . implode('», «', $changed) . '»']);
+                return trans('eloquent_journal::journal.type_handler.model.short_description_named', ['names' => '«' . implode('», «', $changed) . '»']);
             }
 
-            return trans('journal::journal.type_handler.model.short_description_qty', ['qty' => count($changed)]);
+            return trans('eloquent_journal::journal.type_handler.model.short_description_qty', ['qty' => count($changed)]);
         }
 
         return null;
@@ -79,7 +79,7 @@ class ModelType implements TypeInterface
             return null;
         }
 
-        return view('journal::handler.model', ['data' => $data])->render();
+        return view('eloquent_journal::handler.model', ['data' => $data])->render();
     }
 
     /**
@@ -129,12 +129,12 @@ class ModelType implements TypeInterface
 
         $data = $model->getAttributes();
         $dataOriginal = $model->getRawOriginal();
-        $schema = config('journal.entity.' . $modelClass . '.schema');
+        $schema = config('eloquent_journal.entity.' . $modelClass . '.schema');
         if (! isset($schema)) {
             throw new \LogicException('The model ['.$modelClass.'] is not configured.');
         }
 
-        $this->cleanData($data, $dataOriginal, $model, config('journal.entity.' . $modelClass . '.exclude_attributes', []));
+        $this->cleanData($data, $dataOriginal, $model, config('eloquent_journal.entity.' . $modelClass . '.exclude_attributes', []));
         if ($data == $dataOriginal && $event == 'update') {
             return null; // nothing to save
         }
@@ -368,15 +368,15 @@ class ModelType implements TypeInterface
     protected function applyFormat($value)
     {
         if ($value === true) {
-            return trans('journal::journal.type_handler.model.full_description_true');
+            return trans('eloquent_journal::journal.type_handler.model.full_description_true');
         }
 
         if ($value === false) {
-            return trans('journal::journal.type_handler.model.full_description_false');
+            return trans('eloquent_journal::journal.type_handler.model.full_description_false');
         }
 
         if ($value === null) {
-            return trans('journal::journal.type_handler.model.full_description_null');
+            return trans('eloquent_journal::journal.type_handler.model.full_description_null');
         }
 
         return $value;
@@ -391,7 +391,7 @@ class ModelType implements TypeInterface
     {
         $attributeNames = (new $modelClass())->getAttributeNames();
 
-        foreach (config("journal.entity.{$modelClass}.attribute_names") as $attributePath => $attributeTitle) {
+        foreach (config("eloquent_journal.entity.{$modelClass}.attribute_names") as $attributePath => $attributeTitle) {
             if (is_numeric($attributePath)) {
 
                 $extraNames = preg_replace_callback('#\{([a-z\d\_]+)\}#iu', function (array $patterns) use ($data) {

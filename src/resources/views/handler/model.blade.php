@@ -19,7 +19,7 @@
         @endif
         <td>
             @if (is_array($old) || is_array($new))
-              @include('journal::handler.model', ['data' => ['old' => $old, 'new' => $new]])
+              @include('eloquent_journal::handler.model', ['data' => ['old' => $old, 'new' => $new]])
             @elseif ($old === $new)
               {{ $new }}
             @else

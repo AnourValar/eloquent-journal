@@ -169,7 +169,7 @@ class Journal extends Model
      */
     protected function getAttributeNamesFromModelLang(): array
     {
-        $attributeNames = trans('journal::journal.attributes');
+        $attributeNames = trans('eloquent_journal::journal.attributes');
 
         return is_array($attributeNames) ? $attributeNames : [];
     }
@@ -193,8 +193,8 @@ class Journal extends Model
             'ip_address' => ['nullable', 'ip'],
             'entity' => ['nullable', 'required_with:entity_id', 'string', "in:{$entities}"],
             'entity_id' => ['nullable', 'required_with:entity', 'integer', 'min:1'],
-            'type' => ['required', 'string', 'config:journal.type'],
-            'event' => ['required', 'string', 'config:journal.event'],
+            'type' => ['required', 'string', 'config:eloquent_journal.type'],
+            'event' => ['required', 'string', 'config:eloquent_journal.event'],
             'data' => ['nullable', 'array'],
             'success' => ['required', 'boolean'],
             'tags' => ['nullable', 'array', 'min:1', 'max:10'],
@@ -221,7 +221,7 @@ class Journal extends Model
             }
 
             if (! $user) {
-                $validator->errors()->add('user_id', trans('journal::journal.user_id_not_exists'));
+                $validator->errors()->add('user_id', trans('eloquent_journal::journal.user_id_not_exists'));
             }
         }
 
@@ -235,7 +235,7 @@ class Journal extends Model
             }
 
             if (! $entity) {
-                $validator->errors()->add('entity_id', trans('journal::journal.entity_id_not_exists'));
+                $validator->errors()->add('entity_id', trans('eloquent_journal::journal.entity_id_not_exists'));
             }
         }
 
@@ -315,7 +315,7 @@ class Journal extends Model
         if (! $user->can('admin.administration')) {
             $builder
                 ->where('user_id', '=', $user->id)
-                ->whereIn('event', array_keys(array_filter(config('journal.event'), fn ($item) => ! empty($item['is_public']))));
+                ->whereIn('event', array_keys(array_filter(config('eloquent_journal.event'), fn ($item) => ! empty($item['is_public']))));
         }
     }
 
@@ -324,7 +324,7 @@ class Journal extends Model
      */
     public function getTypeHandler(): \AnourValar\EloquentJournal\Handlers\TypeInterface
     {
-        return \App::make(config('journal.type')[$this->type]['bind']);
+        return \App::make(config('eloquent_journal.type')[$this->type]['bind']);
     }
 
     /**
@@ -335,7 +335,7 @@ class Journal extends Model
     protected function typeDetails(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => config("journal.type.{$this->type}"),
+            get: fn ($value) => config("eloquent_journal.type.{$this->type}"),
         );
     }
 
@@ -347,7 +347,7 @@ class Journal extends Model
     protected function typeTitle(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => trans(config("journal.type.{$this->type}.title")),
+            get: fn ($value) => trans(config("eloquent_journal.type.{$this->type}.title")),
         );
     }
 
@@ -360,7 +360,7 @@ class Journal extends Model
     {
         $morphMap = Relation::morphMap();
         return Attribute::make(
-            get: fn ($value) => $this->entity ? config("journal.entity.{$morphMap[$this->entity]}") : null,
+            get: fn ($value) => $this->entity ? config("eloquent_journal.entity.{$morphMap[$this->entity]}") : null,
         );
     }
 
@@ -373,7 +373,7 @@ class Journal extends Model
     {
         $morphMap = Relation::morphMap();
         return Attribute::make(
-            get: fn ($value) => $this->entity ? trans(config("journal.entity.{$morphMap[$this->entity]}.title")) : null,
+            get: fn ($value) => $this->entity ? trans(config("eloquent_journal.entity.{$morphMap[$this->entity]}.title")) : null,
         );
     }
 
@@ -398,7 +398,7 @@ class Journal extends Model
     protected function eventDetails(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => config("journal.event.{$this->event}"),
+            get: fn ($value) => config("eloquent_journal.event.{$this->event}"),
         );
     }
 
@@ -410,7 +410,7 @@ class Journal extends Model
     protected function eventTitle(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => trans(config("journal.event.{$this->event}.title")),
+            get: fn ($value) => trans(config("eloquent_journal.event.{$this->event}.title")),
         );
     }
 

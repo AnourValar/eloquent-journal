@@ -23,7 +23,7 @@ $schedule->command('model:prune --path=app')->dailyAt('00:00')->runInBackground(
 
 ## Usage
 
-**Step #1: Set up the journal config**
+**Step #1: Set up the eloquent_journal config**
 
 **Step #2: Use the AnourValar\EloquentJournal\Service to capture events**
 

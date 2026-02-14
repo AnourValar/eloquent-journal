@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-  @include('journal::web.index.filters')
+  @include('eloquent_journal::web.index.filters')
 
   <x-form::table-page :request="$request" :collection="$journals">
     <table class="table table-bordered table-striped table-empty">
@@ -41,7 +41,7 @@
               @if ($description = $journal->full_description)
                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#journal-{{ $journal->id }}">&nbsp;<i class="fa-solid fa-pen"></i>&nbsp;</button>
                 @push('modals')
-                  @include('journal::web.index.modal', ['id' => $journal->id, 'description' => $description])
+                  @include('eloquent_journal::web.index.modal', ['id' => $journal->id, 'description' => $description])
                 @endpush
               @endif
             </td>

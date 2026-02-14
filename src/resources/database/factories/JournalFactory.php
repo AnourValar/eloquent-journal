@@ -17,10 +17,10 @@ class JournalFactory extends Factory
      */
     public function definition(): array
     {
-        $types = array_keys(config('journal.type'));
+        $types = array_keys(config('eloquent_journal.type'));
         shuffle($types);
 
-        $events = array_keys(config('journal.event'));
+        $events = array_keys(config('eloquent_journal.event'));
         shuffle($events);
 
         return [
