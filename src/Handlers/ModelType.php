@@ -12,14 +12,22 @@ class ModelType implements TypeInterface
     public const SCHEMA_MULTIPLE_ENCODED = 'schema_multiple_encoded';
 
     /**
+     * @var string
+     */
+    protected string $timezone;
+
+    /**
      * DI
      *
      * @param \AnourValar\EloquentValidation\ValidatorHelper $validatorHelper
+     * @param \AnourValar\LaravelAtom\Helpers\DateHelper $dateHelper
      * @return void
      */
-    public function __construct(protected \AnourValar\EloquentValidation\ValidatorHelper $validatorHelper)
-    {
-
+    public function __construct(
+        protected \AnourValar\EloquentValidation\ValidatorHelper $validatorHelper,
+        protected \AnourValar\LaravelAtom\Helpers\DateHelper $dateHelper,
+    ) {
+        $this->timezone = config('app.timezone_client') ?? 'UTC';
     }
 
     /**
@@ -223,12 +231,15 @@ class ModelType implements TypeInterface
                 }
             }
 
-            // datetime?
-            if (isset($data[$attribute]) && in_array($casts[$attribute] ?? '', ['datetime'])) {
-                $data[$attribute] = \Date::parse($data[$attribute])->format('Y-m-d H:i:s') . ' [UTC]';
-            }
-            if (isset($dataOriginal[$attribute]) && in_array($casts[$attribute] ?? '', ['datetime'])) {
-                $dataOriginal[$attribute] = \Date::parse($dataOriginal[$attribute])->format('Y-m-d H:i:s') . ' [UTC]';
+            // custom casts?
+            if (method_exists($casts[$attribute] ?? '', 'castUsing')) {
+                if (isset($data[$attribute])) {
+                    $data[$attribute] = json_decode($data[$attribute], true);
+                }
+
+                if (isset($dataOriginal[$attribute])) {
+                    $dataOriginal[$attribute] = json_decode($dataOriginal[$attribute], true);
+                }
             }
         }
     }
@@ -377,6 +388,10 @@ class ModelType implements TypeInterface
 
         if ($value === null) {
             return trans('eloquent_journal::journal.type_handler.model.full_description_null');
+        }
+
+        if (preg_match('#^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$#uS', $value)) {
+            return $this->dateHelper->formatDateTime($value, $this->timezone) . " [{$this->timezone}]";
         }
 
         return $value;
