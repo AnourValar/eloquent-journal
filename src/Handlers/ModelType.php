@@ -390,7 +390,7 @@ class ModelType implements TypeInterface
             return trans('eloquent_journal::journal.type_handler.model.full_description_null');
         }
 
-        if (preg_match('#^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$#uS', $value)) {
+        if (is_string($value) && preg_match('#^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$#uS', $value)) {
             return $this->dateHelper->formatDateTime($value, $this->timezone) . " [{$this->timezone}]";
         }
 
