@@ -192,7 +192,7 @@ class Journal extends Model
             'user_id' => ['nullable', 'integer', 'min:1'],
             'ip_address' => ['nullable', 'ip'],
             'entity' => ['nullable', 'required_with:entity_id', 'string', "in:{$entities}"],
-            'entity_id' => ['nullable', 'required_with:entity', 'integer', 'min:1'],
+            'entity_id' => ['nullable', 'required_with:entity', 'integer', 'min:1'], // no deep validation
             'type' => ['required', 'string', 'config:eloquent_journal.type'],
             'event' => ['required', 'string', 'config:eloquent_journal.event'],
             'data' => ['nullable', 'array'],
@@ -222,20 +222,6 @@ class Journal extends Model
 
             if (! $user) {
                 $validator->errors()->add('user_id', trans('eloquent_journal::journal.user_id_not_exists'));
-            }
-        }
-
-        // entity_id
-        if (! $basic && $this->isDirty('entity_id') && $this->entity_id) {
-            $class = Relation::morphMap()[$this->entity];
-            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses($class))) {
-                $entity = $class::withTrashed()->find($this->entity_id);
-            } else {
-                $entity = $class::find($this->entity_id);
-            }
-
-            if (! $entity) {
-                $validator->errors()->add('entity_id', trans('eloquent_journal::journal.entity_id_not_exists'));
             }
         }
 

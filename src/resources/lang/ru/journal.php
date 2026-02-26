@@ -18,7 +18,6 @@ return [
     ],
 
     'user_id_not_exists' => 'Несуществующий пользователь.',
-    'entity_id_not_exists' => 'Несуществующая сущность.',
 
     'entity' => [
         //'payment' => 'Транзакция',

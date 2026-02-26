@@ -18,7 +18,6 @@ return [
     ],
 
     'user_id_not_exists' => 'Non-existent user.',
-    'entity_id_not_exists' => 'Non-existent entity.',
 
     'entity' => [
         //'payment' => 'Transactions',
