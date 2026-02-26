@@ -276,7 +276,7 @@ class Journal extends Model
         $builder
             ->with([
                 'user' => fn ($query) => $query->light(),
-                'entitable' => fn ($query) => $query->light(),
+                //'entitable' => fn ($query) => $query->light(),
             ])
             ->select(['id', 'user_id', 'ip_address', 'entity', 'entity_id', 'type', 'event', 'data', 'success', 'tags', 'created_at'])
             ->addPublishFields([
