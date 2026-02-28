@@ -20,11 +20,13 @@ class ModelType implements TypeInterface
      * DI
      *
      * @param \AnourValar\EloquentValidation\ValidatorHelper $validatorHelper
+     * @param \AnourValar\LaravelAtom\Helpers\NumberHelper $numberHelper
      * @param \AnourValar\LaravelAtom\Helpers\DateHelper $dateHelper
      * @return void
      */
     public function __construct(
         protected \AnourValar\EloquentValidation\ValidatorHelper $validatorHelper,
+        protected \AnourValar\LaravelAtom\Helpers\NumberHelper $numberHelper,
         protected \AnourValar\LaravelAtom\Helpers\DateHelper $dateHelper,
     ) {
         $this->timezone = config('app.timezone_client') ?? 'UTC';
@@ -320,12 +322,7 @@ class ModelType implements TypeInterface
         } elseif ($details['type'] == self::SCHEMA_MULTIPLE_ENCODED) {
 
             foreach ($values as &$value) {
-                $value = number_format(
-                    \App::make(\AnourValar\LaravelAtom\Helpers\NumberHelper::class)->decodeMultiple($value),
-                    strlen(config('atom.number.multiple')) - 1,
-                    '.',
-                    ''
-                );
+                $value = $this->numberHelper->formatMultiple($value, config('app.fallback_locale'));
             }
             unset($value);
             return $values;
