@@ -17,6 +17,7 @@ parameters:
         - '#Call to an undefined method Illuminate\\Database#'
         - '#Call to an undefined static method#'
         - '#AnourValar\\HttpClient\\Response#'
+        - '#on an unknown class Date#'
 
     excludePaths:
 
