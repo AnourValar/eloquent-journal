@@ -323,7 +323,7 @@ class ModelType implements TypeInterface
         } elseif ($details['type'] == self::SCHEMA_MULTIPLE_ENCODED) {
 
             foreach ($values as &$value) {
-                $value = $this->numberHelper->formatMultiple($value, config('app.fallback_locale'));
+                $value = $this->numberHelper->formatMultiple($value, locale: config('app.fallback_locale'));
             }
             unset($value);
             return $values;
