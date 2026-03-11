@@ -2,6 +2,7 @@ parameters:
 
     paths:
         - src
+        - tests
 
     # The level 10 is the highest level
     level: 5

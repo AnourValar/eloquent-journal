@@ -11,6 +11,6 @@ class ExampleTest extends AbstractSuite
      */
     public function test_example()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
