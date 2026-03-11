@@ -388,7 +388,7 @@ class ModelType implements TypeInterface
             return trans('eloquent_journal::journal.type_handler.model.full_description_null');
         }
 
-        if (is_float($value)) {
+        if (is_float($value) || is_integer($value)) {
             return $this->numberHelper->formatNumber($value, 20);
         }
 
