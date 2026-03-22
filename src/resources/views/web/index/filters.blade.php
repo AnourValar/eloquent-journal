@@ -91,7 +91,7 @@
         <x-input
           type="text"
           name="filter[created_at][>=]"
-          :value="$dateHelper->formatDateTime($request->filter('created_at.>='), config('app.timezone_client'))"
+          :value="$dateHelper->formatDateTime($request->filter('created_at.>='))"
           class="form-control datetime-picker disable-if-empty"
           autocomplete="off"
         />
@@ -104,7 +104,7 @@
         <x-input
           type="text"
           name="filter[created_at][<=]"
-          :value="$dateHelper->formatDateTime($request->filter('created_at.<='), config('app.timezone_client'))"
+          :value="$dateHelper->formatDateTime($request->filter('created_at.<='))"
           class="form-control datetime-picker disable-if-empty"
           autocomplete="off"
         />

@@ -52,7 +52,7 @@
               @endif
             </td>
             <td>{{ $journal->ip_address }}</td>
-            <td>{{ $dateHelper->formatDateTime($journal->created_at, config('app.timezone_client')) }}</td>
+            <td>{{ $dateHelper->formatDateTime($journal->created_at) }}</td>
           </tr>
         @endforeach
       </tbody>
