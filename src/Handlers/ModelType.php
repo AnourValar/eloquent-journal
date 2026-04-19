@@ -215,17 +215,6 @@ class ModelType implements TypeInterface
                 }
             }
 
-            // hidden or encrypted?
-            if (in_array($attribute, $hidden) || stripos($casts[$attribute] ?? '', 'encrypted') === 0) {
-                if (array_key_exists($attribute, $data)) {
-                    $data[$attribute] = isset($data[$attribute]) ? hash('sha256', json_encode($data[$attribute])) . ' [HASH]' : null;
-                }
-
-                if (array_key_exists($attribute, $dataOriginal)) {
-                    $dataOriginal[$attribute] = isset($dataOriginal[$attribute]) ? hash('sha256', json_encode($dataOriginal[$attribute])) . ' [HASH]' : null;
-                }
-            }
-
             // datetime?
             if (isset($data[$attribute]) && in_array($casts[$attribute] ?? '', ['datetime'])) {
                 $data[$attribute] = \Date::parse($data[$attribute])->format('Y-m-d H:i:s') . ' [UTC]';
@@ -242,6 +231,17 @@ class ModelType implements TypeInterface
 
                 if (isset($dataOriginal[$attribute])) {
                     $dataOriginal[$attribute] = json_decode($dataOriginal[$attribute], true);
+                }
+            }
+
+            // hidden or encrypted? [should be the last]
+            if (in_array($attribute, $hidden) || stripos($casts[$attribute] ?? '', 'encrypted') === 0) {
+                if (array_key_exists($attribute, $data)) {
+                    $data[$attribute] = isset($data[$attribute]) ? hash('sha256', json_encode($data[$attribute])) . ' [HASH]' : null;
+                }
+
+                if (array_key_exists($attribute, $dataOriginal)) {
+                    $dataOriginal[$attribute] = isset($dataOriginal[$attribute]) ? hash('sha256', json_encode($dataOriginal[$attribute])) . ' [HASH]' : null;
                 }
             }
         }
@@ -315,7 +315,7 @@ class ModelType implements TypeInterface
         } elseif ($details['type'] == self::SCHEMA_CONFIG) {
 
             foreach ($values as &$value) {
-                $value = trans(config($details['config'] . '.' . $value)[$details['display']], [], config('app.fallback_locale'));
+                $value = trans(config($details['config'])[$value][$details['display']], [], config('app.fallback_locale'));
             }
             unset($value);
             return $values;
