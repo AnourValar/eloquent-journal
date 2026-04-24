@@ -19,6 +19,7 @@ parameters:
         - '#Call to an undefined static method#'
         - '#AnourValar\\HttpClient\\Response#'
         - '#on an unknown class Date#'
+        - '#on an unknown class Atom#'
 
     excludePaths:
 
