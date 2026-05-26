@@ -35,7 +35,7 @@ Route::prefix('/journal')
     ->controller(AnourValar\EloquentJournal\Http\Controllers\Api\JournalController::class)
     ->group(function () {
         Route::any('/', 'index')
-            ->can('admin.administration')
+            ->can('cabinet.journal.index')
             ->middleware('auth:sanctum', 'throttle:lax');
     });
 ```

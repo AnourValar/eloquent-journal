@@ -298,7 +298,7 @@ class Journal extends Model
             $user = \Auth::user();
         }
 
-        if (! $user->can('admin.administration')) {
+        if (! $user->can('admin.administration|cabinet.journal.index')) {
             $builder
                 ->where('user_id', '=', $user->id)
                 ->whereIn('event', array_keys(array_filter(config('eloquent_journal.event'), fn ($item) => ! empty($item['is_public']))));
