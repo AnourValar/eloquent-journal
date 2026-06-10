@@ -144,7 +144,7 @@ class Service
     public function publishConfig(string $prefix = ''): array
     {
         $onlyPublic = false;
-        if (\Auth::user() && ! \Auth::user()->can('admin.administration|cabinet.journal.index')) {
+        if (\Auth::user() && ! \Auth::user()->can('admin.administration|cabinet.journal.read')) {
             $onlyPublic = true;
         }
 
