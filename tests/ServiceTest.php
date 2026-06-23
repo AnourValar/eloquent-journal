@@ -314,7 +314,7 @@ class ServiceTest extends AbstractSuite
 
         $config = $this->getService()->publishConfig();
 
-        $this->assertSame(['user_token_obtain'], array_keys($config['events']));
+        $this->assertSame(['user_session_obtain', 'user_token_obtain'], array_keys($config['events']));
     }
 
     /**

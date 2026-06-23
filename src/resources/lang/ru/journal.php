@@ -51,7 +51,7 @@ return [
         //'mts_sms_send' => 'МТС (отправка смс)',
 
         // Metric
+        'user_session_obtain' => 'Аутентификация (сессия)',
         'user_token_obtain' => 'Аутентификация (токен)',
-        //'user_session_obtain' => 'Аутентификация (сессия)',
     ],
 ];

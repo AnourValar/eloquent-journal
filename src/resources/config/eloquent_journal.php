@@ -53,7 +53,7 @@ return [
         //'mts_sms_send' => ['title' => 'eloquent_journal::journal.event.mts_sms_send', 'optgroup' => 'eloquent_journal::journal.type.integration', 'is_public' => false],
 
         // Metric
+        'user_session_obtain' => ['title' => 'eloquent_journal::journal.event.user_session_obtain', 'optgroup' => 'eloquent_journal::journal.type.metric', 'is_public' => true],
         'user_token_obtain' => ['title' => 'eloquent_journal::journal.event.user_token_obtain', 'optgroup' => 'eloquent_journal::journal.type.metric', 'is_public' => true],
-        //'user_session_obtain' => ['title' => 'eloquent_journal::journal.event.user_session_obtain', 'optgroup' => 'eloquent_journal::journal.type.metric', 'is_public' => true],
     ],
 ];

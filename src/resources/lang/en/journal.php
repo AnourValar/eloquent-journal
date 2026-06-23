@@ -51,7 +51,7 @@ return [
         //'mts_sms_send' => 'MTS (send SMS)',
 
         // Metric
+        'user_session_obtain' => 'Authentication (session)',
         'user_token_obtain' => 'Authentication (token)',
-        //'user_session_obtain' => 'Authentication (session)',
     ],
 ];
