@@ -469,8 +469,6 @@ class ModelType implements TypeInterface
     }
 
     /**
-     * Undocumented function
-     *
      * @param mixed $value
      * @return string
      */
