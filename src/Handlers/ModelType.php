@@ -237,11 +237,11 @@ class ModelType implements TypeInterface
             // hidden or encrypted? [should be the last]
             if (in_array($attribute, $hidden) || stripos($casts[$attribute] ?? '', 'encrypted') === 0) {
                 if (array_key_exists($attribute, $data)) {
-                    $data[$attribute] = isset($data[$attribute]) ? hash('sha256', \Atom::normalizeKey($data[$attribute])) . ' [HASH]' : null;
+                    $data[$attribute] = isset($data[$attribute]) ? $this->hash($data[$attribute]) . ' [HASH]' : null;
                 }
 
                 if (array_key_exists($attribute, $dataOriginal)) {
-                    $dataOriginal[$attribute] = isset($dataOriginal[$attribute]) ? hash('sha256', \Atom::normalizeKey($dataOriginal[$attribute])) . ' [HASH]' : null;
+                    $dataOriginal[$attribute] = isset($dataOriginal[$attribute]) ? $this->hash($dataOriginal[$attribute]) . ' [HASH]' : null;
                 }
             }
         }
@@ -466,5 +466,16 @@ class ModelType implements TypeInterface
         }
 
         return $attributeNames;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function hash($value): string
+    {
+        return hash('sha256', \Atom::normalizeKey([mb_substr(config('app.key'), 0, 20), $value]));
     }
 }
