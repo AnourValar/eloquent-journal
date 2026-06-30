@@ -198,6 +198,84 @@ class ModelTypeTest extends AbstractSuite
     }
 
     /**
+     * A single (scalar) value is resolved through the model schema.
+     *
+     * @return void
+     */
+    public function test_schema_model_scalar_value()
+    {
+        config(['eloquent_journal.entity.' . User::class . '.schema' => [
+            'settings.manager_id' => ['type' => ModelType::SCHEMA_MODEL, 'model' => User::class, 'display' => 'email'],
+        ]]);
+
+        $manager = $this->createUser(['email' => 'manager@example.com']);
+        $user = $this->createUser(['settings' => ['manager_id' => $manager->id]]);
+
+        $data = $this->getHandler()->getData($user, 'create');
+
+        $this->assertSame("manager@example.com [#{$manager->id}]", $data['schema_new']['settings']['manager_id']);
+    }
+
+    /**
+     * A scalar value pointing to a missing model keeps its original value
+     * instead of being replaced with null.
+     *
+     * @return void
+     */
+    public function test_schema_model_scalar_missing_keeps_original()
+    {
+        config(['eloquent_journal.entity.' . User::class . '.schema' => [
+            'settings.manager_id' => ['type' => ModelType::SCHEMA_MODEL, 'model' => User::class, 'display' => 'email'],
+        ]]);
+
+        $user = $this->createUser(['settings' => ['manager_id' => 999999]]); // no such model
+
+        $data = $this->getHandler()->getData($user, 'create');
+
+        $this->assertSame(999999, $data['schema_new']['settings']['manager_id']);
+    }
+
+    /**
+     * "display" may be an array of attributes - the first available one is used.
+     *
+     * @return void
+     */
+    public function test_schema_model_multiple_display()
+    {
+        config(['eloquent_journal.entity.' . User::class . '.schema' => [
+            'settings.friend_ids' => ['type' => ModelType::SCHEMA_MODEL, 'model' => User::class, 'display' => ['email', 'phone']],
+        ]]);
+
+        $friend = $this->createUser(['email' => 'friend@example.com', 'phone' => '79990001111']);
+        $user = $this->createUser(['settings' => ['friend_ids' => [$friend->id]]]);
+
+        $data = $this->getHandler()->getData($user, 'create');
+
+        // the first display attribute (email) is set => it wins
+        $this->assertSame(["friend@example.com [#{$friend->id}]"], $data['schema_new']['settings']['friend_ids']);
+    }
+
+    /**
+     * When the first "display" attribute is empty, the next one is used as a fallback.
+     *
+     * @return void
+     */
+    public function test_schema_model_multiple_display_fallback()
+    {
+        config(['eloquent_journal.entity.' . User::class . '.schema' => [
+            'settings.friend_ids' => ['type' => ModelType::SCHEMA_MODEL, 'model' => User::class, 'display' => ['email', 'phone']],
+        ]]);
+
+        $friend = $this->createUser(['email' => null, 'phone' => '79990009999']);
+        $user = $this->createUser(['settings' => ['friend_ids' => [$friend->id]]]);
+
+        $data = $this->getHandler()->getData($user, 'create');
+
+        // email is null => the next display attribute (phone) is used
+        $this->assertSame(["79990009999 [#{$friend->id}]"], $data['schema_new']['settings']['friend_ids']);
+    }
+
+    /**
      * @return void
      */
     public function test_schema_incorrect_type()

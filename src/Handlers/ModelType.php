@@ -263,7 +263,7 @@ class ModelType implements TypeInterface
                     if (is_array($value)) {
                         $value = $this->applySchema($value, $schema[$schemaPath]);
                     } elseif (isset($value)) {
-                        $value = $this->applySchema([$value], $schema[$schemaPath])[0];
+                        $value = $this->applySchema([$value], $schema[$schemaPath])[0] ?? $value;
                     }
 
                     continue 2;
@@ -295,10 +295,10 @@ class ModelType implements TypeInterface
         if ($details['type'] == self::SCHEMA_MODEL) {
 
             $class = $details['model'];
-            $display = $details['display'];
-            $select = [$display, (new $class())->getKeyName()];
+            $display = (array) $details['display'];
+            $select = [...$display, (new $class())->getKeyName()];
 
-            return \Cache::driver('array')->rememberForever(implode(' / ', [$class, $display, ...$values]), function () use ($values, $class, $display, $select) {
+            return \Cache::driver('array')->rememberForever(implode(' / ', [$class, ...$display, ...$values]), function () use ($values, $class, $display, $select) {
                 if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses($class))) {
                     $collection = $class::withTrashed()->select($select)->find($values);
                 } else {
@@ -307,7 +307,17 @@ class ModelType implements TypeInterface
 
                 return $collection
                     ->sort(fn ($a, $b) => array_search($a->getKey(), $values) <=> array_search($b->getKey(), $values))
-                    ->transform(fn ($item) => sprintf('%s [#%s]', (string) $item->$display, (string) $item->getKey()))
+                    ->transform(function ($item) use ($display) {
+                        $title = '';
+                        foreach ($display as $curr) {
+                            if (isset($item->$curr)) {
+                                $title = $item->$curr;
+                                break;
+                            }
+                        }
+
+                        return sprintf('%s [#%s]', $title, (string) $item->getKey());
+                    })
                     ->values()
                     ->toArray();
             });

@@ -10,7 +10,7 @@ return [
             'title' => 'eloquent_journal::journal.entity.payment',
 
             'schema' => [ // modification for the values
-                'data.user_ids' => ['type' => ModelType::SCHEMA_MODEL, 'model' => App\User::class, 'display' => 'title'],
+                'data.user_ids' => ['type' => ModelType::SCHEMA_MODEL, 'model' => App\User::class, 'display' => ['email', 'phone']],
                 'type' => ['type' => ModelType::SCHEMA_CONFIG, 'config' => 'models.payment.type', 'display' => 'title'],
                 'amount' => ['type' => ModelType::SCHEMA_MULTIPLE_ENCODED],
             ],
