@@ -24,7 +24,7 @@
           :selected="$request->filter('entity.in', [])"
           class="select2bs4"
           multiple="multiple"
-          data-placeholder="{{ __('Не выбрано') }}"
+          data-placeholder="{{ __('Не выбрана') }}"
         />
       </div>
     </div>
@@ -38,6 +38,7 @@
           :value="$request->filter('entity_id.=')"
           class="form-control disable-if-empty"
           autocomplete="off"
+          placeholder="{{ __('Не выбран') }}"
         />
       </div>
     </div>
@@ -51,7 +52,7 @@
           :selected="$request->filter('success.in', [])"
           class="select2bs4"
           multiple="multiple"
-          data-placeholder="{{ __('Не выбрано') }}"
+          data-placeholder="{{ __('Не выбрана') }}"
         />
       </div>
     </div>
@@ -67,6 +68,7 @@
           :value="$request->filter('user_id.=')"
           class="form-control disable-if-empty"
           autocomplete="off"
+          placeholder="{{ __('Не выбран') }}"
         />
       </div>
     </div>
@@ -81,6 +83,7 @@
           :selected="$request->filter('tags.json-contains')"
           class="select2bs4"
           data-tags="true"
+          data-placeholder="{{ __('Не выбраны') }}"
         />
       </div>
     </div>
@@ -94,6 +97,7 @@
           :value="$dateHelper->formatDateTime($request->filter('created_at.>='))"
           class="form-control datetime-picker disable-if-empty"
           autocomplete="off"
+          placeholder="{{ __('Не выбрано') }}"
         />
       </div>
     </div>
@@ -107,6 +111,7 @@
           :value="$dateHelper->formatDateTime($request->filter('created_at.<='))"
           class="form-control datetime-picker disable-if-empty"
           autocomplete="off"
+          placeholder="{{ __('Не выбрано') }}"
         />
       </div>
     </div>
