@@ -34,7 +34,7 @@ class ModelType implements TypeInterface
         $validator->addRules([
             'entity' => ['required'],
             'event' => ['in:create,update,delete,restore'],
-            'data' => ['required', 'array_keys'],
+            'data' => ['required', 'array_keys_auto'],
                 'data.old' => ['sometimes', 'required', 'array'],
                 'data.new' => ['sometimes', 'required', 'array'],
                 'data.schema_old' => ['sometimes', 'required', 'array'],
