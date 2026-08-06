@@ -28,7 +28,7 @@ class Observer
     public function updated(Model $model)
     {
         if (\Auth::id()) {
-            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses($model))) {
+            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($model))) {
                 $column = $model->getDeletedAtColumn();
                 if ($model->getOriginal($column) && ! $model->getAttribute($column)) {
                     \App::make(\AnourValar\EloquentJournal\Service::class)->captureModel('restore', $model);

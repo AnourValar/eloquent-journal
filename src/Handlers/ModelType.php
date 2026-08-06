@@ -126,7 +126,7 @@ class ModelType implements TypeInterface
     public function getData(\Illuminate\Database\Eloquent\Model $model, string $event): ?array
     {
         $modelClass = get_class($model);
-        if (! in_array(\AnourValar\EloquentValidation\ModelTrait::class, class_uses($model))) {
+        if (! in_array(\AnourValar\EloquentValidation\ModelTrait::class, class_uses_recursive($model))) {
             throw new \LogicException('The model ['.$modelClass.'] is not supported.');
         }
 
@@ -299,7 +299,7 @@ class ModelType implements TypeInterface
             $select = [...$display, (new $class())->getKeyName()];
 
             return \Cache::driver('array')->rememberForever(implode(' / ', [$class, ...$display, ...$values]), function () use ($values, $class, $display, $select) {
-                if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses($class))) {
+                if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($class))) {
                     $collection = $class::withTrashed()->select($select)->find($values);
                 } else {
                     $collection = $class::select($select)->find($values);
