@@ -4,6 +4,7 @@ use AnourValar\EloquentJournal\Handlers\ModelType;
 
 return [
     'model' => App\Journal::class,
+    'web_layout' => 'admin.layout', // eloquent_journal::layout
 
     'entity' => [
         /*App\Payment::class => [ // Relation::morphMap() - must be set

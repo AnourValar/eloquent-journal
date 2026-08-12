@@ -1,5 +1,5 @@
 @inject('dateHelper', AnourValar\LaravelAtom\Helpers\DateHelper::class)
-@extends('admin.layout')
+@extends(config('eloquent_journal.web_layout'))
 
 @section('title')
   @lang('Журнал')
